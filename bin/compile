@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+while read font_url; do
+  if [ -n "$url" ]; then # incase ensure_newline_at_eof_on_save is enabled
+    echo Vendoring $font_url | indent
+
+    cd /usr/local/share/fonts
+
+    curl -L --silent -O $font_url
+  fi
+done < $1/.font-urls
